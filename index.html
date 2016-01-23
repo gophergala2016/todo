@@ -2,49 +2,44 @@
 {{ define "body" }}
 <div class="container">
   {{ if .Data.Username }}
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        Todos
-      </div>
-      <table class="table">
-        <thead>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>
+            No.
+          </th>
+          <th>
+            Text
+          </th>
+          <th>
+            Done
+          </th>
+          <th>
+            Created
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {{ range $index, $item := .Data.Todos }}
           <tr>
-            <th>
-              No.
-            </th>
-            <th>
-              Text
-            </th>
-            <th>
-              Done
-            </th>
-            <th>
-              Created
-            </th>
+            <td>
+              {{ add $index 1 }}
+            </td>
+            <td>
+              {{ $item.Text }}
+            </td>
+            <td>
+              {{ $item.Done }}
+            </td>
+            <td>
+              <span title="{{ float64ToTime $item.CreatedAt }}">
+                {{ float64ToHuman $item.CreatedAt }}
+              </span>
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          {{ range $index, $item := .Data.Todos }}
-            <tr>
-              <td>
-                {{ add $index 1 }}
-              </td>
-              <td>
-                {{ $item.Text }}
-              </td>
-              <td>
-                {{ $item.Done }}
-              </td>
-              <td>
-                <span title="{{ float64ToTime $item.CreatedAt }}">
-                  {{ float64ToHuman $item.CreatedAt }}
-                </span>
-              </td>
-            </tr>
-          {{ end }}
-        </tbody>
-      </table>
-    </div>
+        {{ end }}
+      </tbody>
+    </table>
     <div class="panel panel-default">
       <div class="panel-heading">
         Create Todo
