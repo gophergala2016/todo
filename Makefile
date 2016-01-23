@@ -8,4 +8,7 @@ up:
 stop:
 	docker-compose stop
 
-.PHONY: run up stop
+mobile:
+	gomobile bind -target=ios -o todo/Item.framework github.com/zemirco/todo/item
+
+.PHONY: run up stop mobile

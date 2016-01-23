@@ -1,0 +1,5 @@
+framework module "Item" {
+    header "Item.h"
+
+    export *
+}

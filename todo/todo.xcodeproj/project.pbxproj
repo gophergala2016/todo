@@ -20,6 +20,8 @@
 		3B75A02F1C53BE0000E92480 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B75A02E1C53BDFF00E92480 /* SystemConfiguration.framework */; };
 		3B75A0311C53BE0A00E92480 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B75A0301C53BE0A00E92480 /* libsqlite3.tbd */; };
 		3B75A0331C53BE1300E92480 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B75A0321C53BE1300E92480 /* libz.tbd */; };
+		3B75A0371C53CFAF00E92480 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B75A0361C53CFAF00E92480 /* Database.swift */; };
+		3B75A0391C53D84F00E92480 /* Item.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B75A0381C53D84F00E92480 /* Item.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +62,8 @@
 		3B75A0301C53BE0A00E92480 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		3B75A0321C53BE1300E92480 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		3B75A0351C53C06000E92480 /* todo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "todo-Bridging-Header.h"; sourceTree = "<group>"; };
+		3B75A0361C53CFAF00E92480 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
+		3B75A0381C53D84F00E92480 /* Item.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Item.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +74,7 @@
 				3B75A0331C53BE1300E92480 /* libz.tbd in Frameworks */,
 				3B75A0311C53BE0A00E92480 /* libsqlite3.tbd in Frameworks */,
 				3B75A02F1C53BE0000E92480 /* SystemConfiguration.framework in Frameworks */,
+				3B75A0391C53D84F00E92480 /* Item.framework in Frameworks */,
 				3B75A02D1C53BDF600E92480 /* Security.framework in Frameworks */,
 				3B75A02B1C53BDEC00E92480 /* CFNetwork.framework in Frameworks */,
 				3B75A0291C53BD9200E92480 /* CouchbaseLite.framework in Frameworks */,
@@ -96,6 +101,7 @@
 		3B759FEA1C53B71900E92480 = {
 			isa = PBXGroup;
 			children = (
+				3B75A0381C53D84F00E92480 /* Item.framework */,
 				3B75A0351C53C06000E92480 /* todo-Bridging-Header.h */,
 				3B75A0321C53BE1300E92480 /* libz.tbd */,
 				3B75A0301C53BE0A00E92480 /* libsqlite3.tbd */,
@@ -125,6 +131,7 @@
 			children = (
 				3B759FF61C53B71900E92480 /* AppDelegate.swift */,
 				3B75A0241C53B87000E92480 /* TodosTableViewController.swift */,
+				3B75A0361C53CFAF00E92480 /* Database.swift */,
 				3B75A0261C53BADE00E92480 /* AddTodoViewController.swift */,
 				3B759FFD1C53B71A00E92480 /* Assets.xcassets */,
 				3B759FFF1C53B71A00E92480 /* LaunchScreen.storyboard */,
@@ -283,6 +290,7 @@
 			files = (
 				3B75A0271C53BADE00E92480 /* AddTodoViewController.swift in Sources */,
 				3B759FF71C53B71900E92480 /* AppDelegate.swift in Sources */,
+				3B75A0371C53CFAF00E92480 /* Database.swift in Sources */,
 				3B75A0251C53B87000E92480 /* TodosTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
