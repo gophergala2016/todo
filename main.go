@@ -9,15 +9,21 @@ import (
 
 var (
 	indexTemplate = NewAppTemplate("index.html")
+	loginTemplate = NewAppTemplate("login.html")
 )
 
 func main() {
 	r := mux.NewRouter()
 	r.StrictSlash(true)
 	r.Methods("GET").Path("/").Handler(appHandler(IndexHandler))
+	r.Methods("GET").Path("/login").Handler(appHandler(GetLoginHandler))
 	log.Fatal(http.ListenAndServe(":3000", r))
 }
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) *appError {
 	return indexTemplate.Execute(w, nil)
+}
+
+func GetLoginHandler(w http.ResponseWriter, r *http.Request) *appError {
+	return loginTemplate.Execute(w, nil)
 }
