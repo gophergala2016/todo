@@ -23,11 +23,53 @@ func main() {
 }
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) *appError {
-	return indexTemplate.Execute(w, nil)
+	// check for logged in user
+	session, err := RediStore.Get(r, "session")
+	if err != nil {
+		return InternalServerError(fmt.Errorf("get session from redistore: %v", err))
+	}
+	username := session.Values["username"]
+	if username == nil {
+		// anonymous user
+		data := struct {
+			Username string
+		}{
+			Username: "",
+		}
+		return indexTemplate.Execute(w, data)
+	}
+	// logged in user
+	susername, ok := username.(string)
+	if !ok {
+		return InternalServerError(fmt.Errorf("parse %v to string", username))
+	}
+	data := struct {
+		Username string
+	}{
+		Username: susername,
+	}
+	return indexTemplate.Execute(w, data)
 }
 
 func GetLoginHandler(w http.ResponseWriter, r *http.Request) *appError {
-	return loginTemplate.Execute(w, nil)
+	// check for logged in user
+	session, err := RediStore.Get(r, "session")
+	if err != nil {
+		return InternalServerError(fmt.Errorf("get session from redistore: %v", err))
+	}
+	username := session.Values["username"]
+	if username == nil {
+		// anonymous user
+		data := struct {
+			Username string
+		}{
+			Username: "",
+		}
+		return loginTemplate.Execute(w, data)
+	}
+	// logged in user
+	http.Redirect(w, r, "/", http.StatusSeeOther)
+	return nil
 }
 
 func PostLoginHandler(w http.ResponseWriter, r *http.Request) *appError {
