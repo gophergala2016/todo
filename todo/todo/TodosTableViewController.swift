@@ -25,6 +25,16 @@ class TodosTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "add")
+        
+        // todos from database
+        let manager = CBLManager.sharedInstance()
+        do {
+            let database = try manager.databaseNamed("todos")
+            let ts = try Database.GetTodos(database)
+            print(ts)
+        } catch {
+            print(error)
+        }
     }
 
     override func didReceiveMemoryWarning() {
