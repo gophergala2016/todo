@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/zemirco/couchdb"
 	"github.com/zemirco/todo/item"
@@ -35,7 +37,9 @@ func main() {
 	r.Methods("POST").Path("/create").Handler(appHandler(CreateHandler))
 	// should be POST
 	r.Methods("GET").Path("/logout").Handler(appHandler(LogoutHandler))
-	log.Fatal(http.ListenAndServe(":3000", r))
+	// add logging
+	rWithLogging := handlers.LoggingHandler(os.Stdout, r)
+	log.Fatal(http.ListenAndServe(":3000", rWithLogging))
 }
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) *appError {
