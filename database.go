@@ -90,16 +90,30 @@ func (d Database) GetTodos(database string) ([]item.Todo, error) {
 	return todos, json.Unmarshal(b, &todos)
 }
 
+func (d Database) GetTodoByID(database, id string) (item.Todo, error) {
+	db := d.Client.Use(database)
+	var t item.Todo
+	return t, db.Get(&t, id)
+}
+
+func (d Database) UpdateTodo(database string, todo item.Todo) error {
+	db := d.Client.Use(database)
+	_, err := db.Put(&todo)
+	if err != nil {
+		return fmt.Errorf("put todo: %v", err)
+	}
+	return nil
+}
+
 func (d Database) DeleteTodoByID(database, id string) error {
 	db := d.Client.Use(database)
-	doc := couchdb.Document{}
 	// get document first to retrieve current revision
-	if err := db.Get(&doc, id); err != nil {
-		return fmt.Errorf("get document: %v", err)
+	doc, err := d.GetTodoByID(database, id)
+	if err != nil {
+		return fmt.Errorf("get todo by id: %v", err)
 	}
 	// delete document by id and revision
-	_, err := db.Delete(&doc)
-	if err != nil {
+	if _, err = db.Delete(&doc); err != nil {
 		return fmt.Errorf("delete document: %v", err)
 	}
 	return nil

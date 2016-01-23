@@ -25,7 +25,7 @@
       </thead>
       <tbody>
         {{ range $index, $item := .Data.Todos }}
-          <tr>
+          <tr {{ if $item.Done }}class="success"{{ end }}>
             <td>
               {{ add $index 1 }}
             </td>
