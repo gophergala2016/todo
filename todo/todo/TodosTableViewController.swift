@@ -34,6 +34,7 @@ class TodosTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath)
         cell.textLabel?.text = todos[indexPath.row].text()
+        cell.accessoryType = UITableViewCellAccessoryType.Checkmark
         return cell
     }
     
