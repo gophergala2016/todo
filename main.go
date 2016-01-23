@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/gorilla/mux"
+	"github.com/zemirco/couchdb"
 	"github.com/zemirco/todo/item"
 )
 
@@ -14,12 +16,23 @@ var (
 	loginTemplate = NewAppTemplate("login.html")
 )
 
+func init() {
+	// init logging
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
+	// add dummy user to database
+	john := couchdb.NewUser("john", "john", []string{})
+	if err := db.CreateUser(john); err != nil {
+		log.Printf("user might already exist: %v", err)
+	}
+}
+
 func main() {
 	r := mux.NewRouter()
 	r.StrictSlash(true)
 	r.Methods("GET").Path("/").Handler(appHandler(IndexHandler))
 	r.Methods("GET").Path("/login").Handler(appHandler(GetLoginHandler))
 	r.Methods("POST").Path("/login").Handler(appHandler(PostLoginHandler))
+	r.Methods("POST").Path("/create").Handler(appHandler(CreateHandler))
 	// should be POST
 	r.Methods("GET").Path("/logout").Handler(appHandler(LogoutHandler))
 	log.Fatal(http.ListenAndServe(":3000", r))
@@ -111,6 +124,24 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) *appError {
 	session.Options.MaxAge = -1
 	if err := session.Save(r, w); err != nil {
 		return InternalServerError(fmt.Errorf("save session: %v", err))
+	}
+	http.Redirect(w, r, "/", http.StatusSeeOther)
+	return nil
+}
+
+func CreateHandler(w http.ResponseWriter, r *http.Request) *appError {
+	text := r.FormValue("text")
+	todo := item.NewTodo(text)
+	// createdAt has to be set manually here as ios doesn't understand type time yet
+	todo.CreatedAt = float64(time.Now().UTC().Unix())
+	// get username from session
+	session, err := RediStore.Get(r, "session")
+	if err != nil {
+		return InternalServerError(fmt.Errorf("get session from redistore: %v", err))
+	}
+	username := session.Values["username"].(string)
+	if err := db.SaveTodo(username, todo); err != nil {
+		return InternalServerError(fmt.Errorf("save todo: %v", err))
 	}
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 	return nil

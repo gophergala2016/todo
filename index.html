@@ -43,6 +43,23 @@
         </tbody>
       </table>
     </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Create Todo
+      </div>
+      <div class="panel-body">
+        <form action="/create" method="post" autocomplete="off">
+          <div class="form-group">
+            <label for="text">Text</label>
+            <input type="text" id="text" name="text" class="form-control">
+          </div>
+          <button type="submit" class="btn btn-primary">
+            Create
+          </button>
+        </form>
+      </div>
+    </div>
   {{ end }}
 </div>
+
 {{ end }}
