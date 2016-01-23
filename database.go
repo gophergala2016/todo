@@ -1,8 +1,10 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 
+	"github.com/segmentio/pointer"
 	"github.com/zemirco/couchdb"
 	"github.com/zemirco/todo/item"
 )
@@ -10,6 +12,13 @@ import (
 type Database struct {
 	Client *couchdb.Client
 }
+
+const (
+	// January 1st 2013 01:00:00
+	past = "1356998400"
+	// December 24th 3600 12:00:00
+	future = "32503593600"
+)
 
 // CreateUser creates per user database and saves user document to _users database
 func (d Database) CreateUser(user couchdb.User) error {
@@ -54,4 +63,29 @@ func (d Database) SaveTodo(database string, todo *item.Todo) error {
 		return fmt.Errorf("post todo: %v", err)
 	}
 	return nil
+}
+
+// GetTodos gets all todos from per user database
+func (d Database) GetTodos(database string) ([]item.Todo, error) {
+	db := d.Client.Use(database)
+	view := db.View("todo")
+	params := couchdb.QueryParameters{
+		StartKey:    pointer.String(past),
+		EndKey:      pointer.String(future),
+		IncludeDocs: pointer.Bool(true),
+	}
+	res, err := view.Get("byCreatedAt", params)
+	if err != nil {
+		return nil, fmt.Errorf("get view byCreatedAt: %v", err)
+	}
+	docs := make([]interface{}, len(res.Rows))
+	for index, row := range res.Rows {
+		docs[index] = row.Doc
+	}
+	todos := make([]item.Todo, len(res.Rows))
+	b, err := json.Marshal(docs)
+	if err != nil {
+		return nil, fmt.Errorf("json marshal: %v", err)
+	}
+	return todos, json.Unmarshal(b, &todos)
 }

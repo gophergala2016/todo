@@ -59,15 +59,14 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) *appError {
 	if !ok {
 		return InternalServerError(fmt.Errorf("parse %v to string", username))
 	}
-	// create some dummy todos
-	todos := []*item.Todo{
-		item.NewTodo("take the dog for a walk"),
-		item.NewTodo("buy some milk"),
-		item.NewTodo("finish gopher gala"),
+	// get todos from database
+	todos, err := db.GetTodos(susername)
+	if err != nil {
+		return InternalServerError(fmt.Errorf("get todos: %v", err))
 	}
 	data := struct {
 		Username string
-		Todos    []*item.Todo
+		Todos    []item.Todo
 	}{
 		Username: susername,
 		Todos:    todos,
