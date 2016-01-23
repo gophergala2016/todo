@@ -1,4 +1,10 @@
 
+# couchdb for sync
+couchdb:
+  image: klaemo/couchdb
+  ports:
+    - "5984:5984"
+
 # redis for sessions
 redis:
   image: redis
