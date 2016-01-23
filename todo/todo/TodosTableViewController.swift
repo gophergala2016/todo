@@ -13,6 +13,8 @@ class TodosTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "add")
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,5 +39,11 @@ class TodosTableViewController: UITableViewController {
         return cell
     }
     */
+    
+    func add() {
+        let vc = AddTodoViewController()
+        let nav = UINavigationController(rootViewController: vc)
+        self.presentViewController(nav, animated: true, completion: nil)
+    }
 
 }

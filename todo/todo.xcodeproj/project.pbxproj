@@ -14,6 +14,7 @@
 		3B75A00C1C53B71A00E92480 /* todoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B75A00B1C53B71A00E92480 /* todoTests.swift */; };
 		3B75A0171C53B71A00E92480 /* todoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B75A0161C53B71A00E92480 /* todoUITests.swift */; };
 		3B75A0251C53B87000E92480 /* TodosTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B75A0241C53B87000E92480 /* TodosTableViewController.swift */; };
+		3B75A0271C53BADE00E92480 /* AddTodoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B75A0261C53BADE00E92480 /* AddTodoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		3B75A0161C53B71A00E92480 /* todoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = todoUITests.swift; sourceTree = "<group>"; };
 		3B75A0181C53B71A00E92480 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3B75A0241C53B87000E92480 /* TodosTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodosTableViewController.swift; sourceTree = "<group>"; };
+		3B75A0261C53BADE00E92480 /* AddTodoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTodoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 				3B759FF61C53B71900E92480 /* AppDelegate.swift */,
 				3B759FF81C53B71A00E92480 /* ViewController.swift */,
 				3B75A0241C53B87000E92480 /* TodosTableViewController.swift */,
+				3B75A0261C53BADE00E92480 /* AddTodoViewController.swift */,
 				3B759FFD1C53B71A00E92480 /* Assets.xcassets */,
 				3B759FFF1C53B71A00E92480 /* LaunchScreen.storyboard */,
 				3B75A0021C53B71A00E92480 /* Info.plist */,
@@ -255,6 +258,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B75A0271C53BADE00E92480 /* AddTodoViewController.swift in Sources */,
 				3B759FF91C53B71A00E92480 /* ViewController.swift in Sources */,
 				3B759FF71C53B71900E92480 /* AppDelegate.swift in Sources */,
 				3B75A0251C53B87000E92480 /* TodosTableViewController.swift in Sources */,
