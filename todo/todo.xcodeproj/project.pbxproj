@@ -8,13 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		3B759FF71C53B71900E92480 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B759FF61C53B71900E92480 /* AppDelegate.swift */; };
-		3B759FF91C53B71A00E92480 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B759FF81C53B71A00E92480 /* ViewController.swift */; };
 		3B759FFE1C53B71A00E92480 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3B759FFD1C53B71A00E92480 /* Assets.xcassets */; };
 		3B75A0011C53B71A00E92480 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3B759FFF1C53B71A00E92480 /* LaunchScreen.storyboard */; };
 		3B75A00C1C53B71A00E92480 /* todoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B75A00B1C53B71A00E92480 /* todoTests.swift */; };
 		3B75A0171C53B71A00E92480 /* todoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B75A0161C53B71A00E92480 /* todoUITests.swift */; };
 		3B75A0251C53B87000E92480 /* TodosTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B75A0241C53B87000E92480 /* TodosTableViewController.swift */; };
 		3B75A0271C53BADE00E92480 /* AddTodoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B75A0261C53BADE00E92480 /* AddTodoViewController.swift */; };
+		3B75A0291C53BD9200E92480 /* CouchbaseLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B75A0281C53BD9200E92480 /* CouchbaseLite.framework */; };
+		3B75A02B1C53BDEC00E92480 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B75A02A1C53BDEB00E92480 /* CFNetwork.framework */; };
+		3B75A02D1C53BDF600E92480 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B75A02C1C53BDF600E92480 /* Security.framework */; };
+		3B75A02F1C53BE0000E92480 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B75A02E1C53BDFF00E92480 /* SystemConfiguration.framework */; };
+		3B75A0311C53BE0A00E92480 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B75A0301C53BE0A00E92480 /* libsqlite3.tbd */; };
+		3B75A0331C53BE1300E92480 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B75A0321C53BE1300E92480 /* libz.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +42,6 @@
 /* Begin PBXFileReference section */
 		3B759FF31C53B71900E92480 /* todo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = todo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B759FF61C53B71900E92480 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3B759FF81C53B71A00E92480 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		3B759FFD1C53B71A00E92480 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3B75A0001C53B71A00E92480 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3B75A0021C53B71A00E92480 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -49,6 +53,13 @@
 		3B75A0181C53B71A00E92480 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3B75A0241C53B87000E92480 /* TodosTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodosTableViewController.swift; sourceTree = "<group>"; };
 		3B75A0261C53BADE00E92480 /* AddTodoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTodoViewController.swift; sourceTree = "<group>"; };
+		3B75A0281C53BD9200E92480 /* CouchbaseLite.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CouchbaseLite.framework; sourceTree = "<group>"; };
+		3B75A02A1C53BDEB00E92480 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		3B75A02C1C53BDF600E92480 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		3B75A02E1C53BDFF00E92480 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		3B75A0301C53BE0A00E92480 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		3B75A0321C53BE1300E92480 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		3B75A0351C53C06000E92480 /* todo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "todo-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +67,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B75A0331C53BE1300E92480 /* libz.tbd in Frameworks */,
+				3B75A0311C53BE0A00E92480 /* libsqlite3.tbd in Frameworks */,
+				3B75A02F1C53BE0000E92480 /* SystemConfiguration.framework in Frameworks */,
+				3B75A02D1C53BDF600E92480 /* Security.framework in Frameworks */,
+				3B75A02B1C53BDEC00E92480 /* CFNetwork.framework in Frameworks */,
+				3B75A0291C53BD9200E92480 /* CouchbaseLite.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +96,13 @@
 		3B759FEA1C53B71900E92480 = {
 			isa = PBXGroup;
 			children = (
+				3B75A0351C53C06000E92480 /* todo-Bridging-Header.h */,
+				3B75A0321C53BE1300E92480 /* libz.tbd */,
+				3B75A0301C53BE0A00E92480 /* libsqlite3.tbd */,
+				3B75A02E1C53BDFF00E92480 /* SystemConfiguration.framework */,
+				3B75A02C1C53BDF600E92480 /* Security.framework */,
+				3B75A02A1C53BDEB00E92480 /* CFNetwork.framework */,
+				3B75A0281C53BD9200E92480 /* CouchbaseLite.framework */,
 				3B759FF51C53B71900E92480 /* todo */,
 				3B75A00A1C53B71A00E92480 /* todoTests */,
 				3B75A0151C53B71A00E92480 /* todoUITests */,
@@ -100,7 +124,6 @@
 			isa = PBXGroup;
 			children = (
 				3B759FF61C53B71900E92480 /* AppDelegate.swift */,
-				3B759FF81C53B71A00E92480 /* ViewController.swift */,
 				3B75A0241C53B87000E92480 /* TodosTableViewController.swift */,
 				3B75A0261C53BADE00E92480 /* AddTodoViewController.swift */,
 				3B759FFD1C53B71A00E92480 /* Assets.xcassets */,
@@ -259,7 +282,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3B75A0271C53BADE00E92480 /* AddTodoViewController.swift in Sources */,
-				3B759FF91C53B71A00E92480 /* ViewController.swift in Sources */,
 				3B759FF71C53B71900E92480 /* AppDelegate.swift in Sources */,
 				3B75A0251C53B87000E92480 /* TodosTableViewController.swift in Sources */,
 			);
@@ -348,6 +370,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "todo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -386,6 +409,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "todo-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -395,8 +419,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = todo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = zemirco.todo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -406,8 +435,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = todo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = zemirco.todo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

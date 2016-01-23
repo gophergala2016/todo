@@ -15,6 +15,9 @@ class TodosTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "add")
+        
+        let manager = CBLManager.sharedInstance()
+        print(manager)
     }
 
     override func didReceiveMemoryWarning() {
