@@ -2,4 +2,10 @@
 run:
 	go run *.go
 
-.PHONY: run
+up:
+	docker-compose up -d
+
+stop:
+	docker-compose stop
+
+.PHONY: run up stop
