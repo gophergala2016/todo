@@ -1,8 +1,48 @@
 
 {{ define "body" }}
 <div class="container">
-  <h1>
-    Todos
-  </h1>
+  {{ if .Data.Username }}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Todos
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>
+              No.
+            </th>
+            <th>
+              Text
+            </th>
+            <th>
+              Done
+            </th>
+            <th>
+              Created
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {{ range $index, $item := .Data.Todos }}
+            <tr>
+              <td>
+                {{ $index }}
+              </td>
+              <td>
+                {{ $item.Text }}
+              </td>
+              <td>
+                {{ $item.Done }}
+              </td>
+              <td>
+                {{ $item.CreatedAt }}
+              </td>
+            </tr>
+          {{ end }}
+        </tbody>
+      </table>
+    </div>
+  {{ end }}
 </div>
 {{ end }}
