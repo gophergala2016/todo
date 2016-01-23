@@ -20,9 +20,9 @@
           </button>
           <a class="navbar-brand" href="/">Todos</a>
         </div>
-        {{ if .Data.Username }}
-          <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav navbar-right">
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            {{ if .Data.Username }}
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   {{ .Data.Username }}
@@ -34,9 +34,13 @@
                   </li>
                 </ul>
               </li>
-            </ul>
-          </div>
-        {{ end }}
+            {{ else }}
+              <li>
+                <a href="/login">Login</a>
+              </li>
+            {{ end }}
+          </ul>
+        </div>
       </div>
     </nav>
 
