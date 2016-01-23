@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  todo
-//
-//  Created by Mirco Zeiss on 1/23/16.
-//  Copyright © 2016 zemirco. All rights reserved.
-//
 
 import UIKit
 
@@ -25,42 +18,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.backgroundColor = UIColor.whiteColor()
         self.window?.makeKeyAndVisible()
         
-        // sync on start
-        let manager = CBLManager.sharedInstance()
-        print(manager)
-        
-        do {
-            let manager = CBLManager.sharedInstance()
-            let database = try manager.databaseNamed("todos")
-            let url = NSURL(string: "http://192.168.99.100:5984/john/")
-            self.push = database.createPushReplication(url!)
-            self.pull = database.createPullReplication(url!)
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "replicationChanged:", name: kCBLReplicationChangeNotification, object: push)
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "replicationChanged:", name: kCBLReplicationChangeNotification, object: pull)
-            
-            push!.start()
-            pull!.start()
-            
-        } catch {
-            print(error)
-        }
+//        // sync on start
+//        let manager = CBLManager.sharedInstance()
+//        print(manager)
+//        
+//        do {
+//            let manager = CBLManager.sharedInstance()
+//            let database = try manager.databaseNamed("todos")
+//            let url = NSURL(string: "http://192.168.99.100:5984/john/")
+//            self.push = database.createPushReplication(url!)
+//            self.pull = database.createPullReplication(url!)
+//            NSNotificationCenter.defaultCenter().addObserver(self, selector: "replicationChanged:", name: kCBLReplicationChangeNotification, object: push)
+//            NSNotificationCenter.defaultCenter().addObserver(self, selector: "replicationChanged:", name: kCBLReplicationChangeNotification, object: pull)
+//            
+//            push!.start()
+//            pull!.start()
+//            
+//        } catch {
+//            print(error)
+//        }
         
         return true
     }
     
-    func replicationChanged(n: NSNotification) {
-        if
-            let pull = self.pull,
-            let push = self.push {
-                if push.status == .Stopped && pull.status == .Stopped {
-                    print("done")
-                    print(pull.lastError)
-                    print(push.lastError)
-//                    self.replicating = false
-//                    self.tableView.reloadData()
-                }
-        }
-    }
+//    func replicationChanged(n: NSNotification) {
+//        if
+//            let pull = self.pull,
+//            let push = self.push {
+//                if push.status == .Stopped && pull.status == .Stopped {
+//                    print("done")
+//                    print(pull.lastError)
+//                    print(push.lastError)
+////                    self.replicating = false
+////                    self.tableView.reloadData()
+//                }
+//        }
+//    }
 
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

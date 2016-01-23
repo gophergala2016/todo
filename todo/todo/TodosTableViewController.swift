@@ -4,12 +4,7 @@ import Item
 
 class TodosTableViewController: UITableViewController {
     
-    private let todos: [GoItemTodo] = [
-        GoItemNewTodo("one"),
-        GoItemNewTodo("two"),
-        GoItemNewTodo("three")
-    ]
-    
+    private var todos: [GoItemTodo] = []
     private let reuseIdentifier = "reuseIdentifier"
 
     override func viewDidLoad() {
@@ -17,21 +12,23 @@ class TodosTableViewController: UITableViewController {
         
         self.title = "Todos"
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-        
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "add")
         
         // todos from database
         let manager = CBLManager.sharedInstance()
         do {
             let database = try manager.databaseNamed("todos")
-            let ts = try Database.GetTodos(database)
-            print(ts)
+            manager.backgroundTellDatabaseNamed(database.name, to: { bgdb in
+                do {
+                    let todos = try Database.GetTodos(bgdb)
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.todos = todos
+                        self.tableView.reloadData()
+                    })
+                } catch {
+                    print(error)
+                }
+            })
         } catch {
             print(error)
         }
@@ -39,7 +36,6 @@ class TodosTableViewController: UITableViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
