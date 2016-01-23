@@ -89,3 +89,18 @@ func (d Database) GetTodos(database string) ([]item.Todo, error) {
 	}
 	return todos, json.Unmarshal(b, &todos)
 }
+
+func (d Database) DeleteTodoByID(database, id string) error {
+	db := d.Client.Use(database)
+	doc := couchdb.Document{}
+	// get document first to retrieve current revision
+	if err := db.Get(&doc, id); err != nil {
+		return fmt.Errorf("get document: %v", err)
+	}
+	// delete document by id and revision
+	_, err := db.Delete(&doc)
+	if err != nil {
+		return fmt.Errorf("delete document: %v", err)
+	}
+	return nil
+}

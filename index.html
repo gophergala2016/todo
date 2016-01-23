@@ -2,7 +2,7 @@
 {{ define "body" }}
 <div class="container">
   {{ if .Data.Username }}
-    <table class="table">
+    <table class="table table-hover">
       <thead>
         <tr>
           <th>
@@ -16,6 +16,10 @@
           </th>
           <th>
             Created
+          </th>
+          <th>
+          </th>
+          <th>
           </th>
         </tr>
       </thead>
@@ -35,6 +39,22 @@
               <span title="{{ float64ToTime $item.CreatedAt }}">
                 {{ float64ToHuman $item.CreatedAt }}
               </span>
+            </td>
+            <td>
+              <form action="/{{ $item.ID }}/done" method="post">
+                <button type="submit" class="btn btn-info btn-xs">
+                  <span class="glyphicon glyphicon-ok"></span>
+                  Done 
+                </button>
+              </form>
+            </td>
+            <td>
+              <form action="/{{ $item.ID }}/delete" method="post">
+                <button type="submit" class="btn btn-warning btn-xs">
+                  <span class="glyphicon glyphicon-remove"></span>
+                  Remove
+                </button>
+              </form>
             </td>
           </tr>
         {{ end }}

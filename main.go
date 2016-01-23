@@ -37,6 +37,8 @@ func main() {
 	r.Methods("POST").Path("/create").Handler(appHandler(CreateHandler))
 	// should be POST
 	r.Methods("GET").Path("/logout").Handler(appHandler(LogoutHandler))
+	r.Methods("POST").Path("/{id}/delete").Handler(appHandler(DeleteHandler))
+	r.Methods("POST").Path("/{id}/done").Handler(appHandler(DoneHandler))
 	// add logging
 	rWithLogging := handlers.LoggingHandler(os.Stdout, r)
 	log.Fatal(http.ListenAndServe(":3000", rWithLogging))
@@ -145,6 +147,22 @@ func CreateHandler(w http.ResponseWriter, r *http.Request) *appError {
 	username := session.Values["username"].(string)
 	if err := db.SaveTodo(username, todo); err != nil {
 		return InternalServerError(fmt.Errorf("save todo: %v", err))
+	}
+	http.Redirect(w, r, "/", http.StatusSeeOther)
+	return nil
+}
+
+func DeleteHandler(w http.ResponseWriter, r *http.Request) *appError {
+	vars := mux.Vars(r)
+	id := vars["id"]
+	// get username from session
+	session, err := RediStore.Get(r, "session")
+	if err != nil {
+		return InternalServerError(fmt.Errorf("get session from redistore: %v", err))
+	}
+	username := session.Values["username"].(string)
+	if err := db.DeleteTodoByID(username, id); err != nil {
+		return InternalServerError(fmt.Errorf("delete todo by id: %v", err))
 	}
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 	return nil
