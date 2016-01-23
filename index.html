@@ -27,7 +27,7 @@
           {{ range $index, $item := .Data.Todos }}
             <tr>
               <td>
-                {{ $index }}
+                {{ add $index 1 }}
               </td>
               <td>
                 {{ $item.Text }}
@@ -36,7 +36,9 @@
                 {{ $item.Done }}
               </td>
               <td>
-                {{ $item.CreatedAt }}
+                <span title="{{ float64ToTime $item.CreatedAt }}">
+                  {{ float64ToHuman $item.CreatedAt }}
+                </span>
               </td>
             </tr>
           {{ end }}
