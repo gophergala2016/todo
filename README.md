@@ -31,7 +31,28 @@ On Linux you can simply use `localhost`.
 
 2. Change golang config
 
-3. Change ios config
+Change the IP in `config.go`.
+
+```go
+const ip = "192.168.99.100"
+```
+
+3. Change osx config
+
+Change the IP in `Config.swift`.
+
+```swift
+public struct Config {
+
+    // on osx
+    // docker-machine default ip
+    public static let URL = "192.168.99.100"
+    
+    // on linux
+    // public static let URL = "localhost"
+
+}
+```
 
 Start the web app via
 
