@@ -26,6 +26,21 @@ public class Database {
         return GoItemNewTodo("")
     }
     
+    public class func AddTodo(db: CBLDatabase, item: GoItemTodo) throws {
+        do {
+            let document = db.createDocument()
+            let properties: [String: AnyObject] = [
+                "type": item.type(),
+                "text": item.text(),
+                "createdAt": item.createdAt(),
+                "done": item.done()
+            ]
+            try document.putProperties(properties)
+        } catch {
+            throw error
+        }
+    }
+    
     public class func UpdateTodo(db: CBLDatabase, item: GoItemTodo) throws {
         let document = db.documentWithID(item.id())
         do {

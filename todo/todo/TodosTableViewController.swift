@@ -13,9 +13,12 @@ class TodosTableViewController: UITableViewController {
         super.viewDidLoad()
         self.title = "Todos"
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: "refresh")
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "add")
         
+        // start syncing
+        self.sync()
+        
+        // load todos
         self.getTodos()
     }
 
@@ -118,7 +121,7 @@ class TodosTableViewController: UITableViewController {
         self.presentViewController(nav, animated: true, completion: nil)
     }
     
-    func refresh() {
+    func sync() {
         let manager = CBLManager.sharedInstance()
         do {
             let database = try manager.databaseNamed("todos")
