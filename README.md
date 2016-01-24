@@ -14,7 +14,7 @@ To shut Docker down use
 
 ```bash
 $ make stop
-```bash
+```
 
 I'm using a Mac and my default `docker-machine` is running on `192.168.99.100`. You'll have to change the IP at some places to make the app work.
 
@@ -46,7 +46,7 @@ I always wanted to reuse my existing code on different platforms. I've tried a l
 
 The `item` package, which defines my todo item data model, is used on the server and the same package is used on iOSas a native Objective-C framework. To create the framework simply run `make mobile`. You need to have [gomobile](https://github.com/golang/go/wiki/Mobile) installed.
 
-Apart from `gomobile` I'd like to show some other cool Go features 
+Apart from `gomobile` I'd like to show some other cool Go features
 
 - http error handling
 - interface satisfaction
