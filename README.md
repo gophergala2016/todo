@@ -1,6 +1,7 @@
 
 # todo
 
+Showcase for syncing data effortlessly between Go backend and native iOS application. Some of the backend code is reused on the mobile application via `gomobile`.
 
 ## Usage
 
@@ -55,3 +56,10 @@ Apart from `gomobile` I'd like to show some other cool Go features
 - nested templates
 - template functions
 
+## Caution
+
+Please don't use this example in production. I had to make some tweaks (like allowing sync over http rather than https) to make the demo work within 48 hours.
+
+## License
+
+MIT
