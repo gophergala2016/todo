@@ -46,9 +46,8 @@ class AddTodoViewController: UIViewController {
             self.presentViewController(alert, animated: true, completion: nil)
             return
         }
-        let manager = CBLManager.sharedInstance()
         do {
-            let database = try manager.databaseNamed("todos")
+            let database = try Database.Get()
             let todo = GoItemNewTodo(text)
             todo.setCreatedAt(NSDate().timeIntervalSince1970 as Double)
             try Database.AddTodo(database, item: todo)

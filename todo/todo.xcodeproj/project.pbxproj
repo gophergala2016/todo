@@ -22,6 +22,7 @@
 		3B75A0331C53BE1300E92480 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B75A0321C53BE1300E92480 /* libz.tbd */; };
 		3B75A0371C53CFAF00E92480 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B75A0361C53CFAF00E92480 /* Database.swift */; };
 		3B75A0391C53D84F00E92480 /* Item.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B75A0381C53D84F00E92480 /* Item.framework */; };
+		3B9937971C54BF710014D24B /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9937961C54BF710014D24B /* Config.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		3B75A0351C53C06000E92480 /* todo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "todo-Bridging-Header.h"; sourceTree = "<group>"; };
 		3B75A0361C53CFAF00E92480 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		3B75A0381C53D84F00E92480 /* Item.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Item.framework; sourceTree = "<group>"; };
+		3B9937961C54BF710014D24B /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				3B759FF61C53B71900E92480 /* AppDelegate.swift */,
+				3B9937961C54BF710014D24B /* Config.swift */,
 				3B75A0241C53B87000E92480 /* TodosTableViewController.swift */,
 				3B75A0361C53CFAF00E92480 /* Database.swift */,
 				3B75A0261C53BADE00E92480 /* AddTodoViewController.swift */,
@@ -290,6 +293,7 @@
 			files = (
 				3B75A0271C53BADE00E92480 /* AddTodoViewController.swift in Sources */,
 				3B759FF71C53B71900E92480 /* AppDelegate.swift in Sources */,
+				3B9937971C54BF710014D24B /* Config.swift in Sources */,
 				3B75A0371C53CFAF00E92480 /* Database.swift in Sources */,
 				3B75A0251C53B87000E92480 /* TodosTableViewController.swift in Sources */,
 			);
@@ -526,6 +530,7 @@
 				3B75A01D1C53B71A00E92480 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3B75A01E1C53B71A00E92480 /* Build configuration list for PBXNativeTarget "todoTests" */ = {
 			isa = XCConfigurationList;
@@ -534,6 +539,7 @@
 				3B75A0201C53B71A00E92480 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3B75A0211C53B71A00E92480 /* Build configuration list for PBXNativeTarget "todoUITests" */ = {
 			isa = XCConfigurationList;
@@ -542,6 +548,7 @@
 				3B75A0231C53B71A00E92480 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

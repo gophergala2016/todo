@@ -4,6 +4,16 @@ import Item
 
 public class Database {
     
+    // get database for main thread
+    public class func Get() throws -> CBLDatabase {
+        let manager = CBLManager.sharedInstance()
+        do {
+            return try manager.databaseNamed("todos")
+        } catch {
+            throw error
+        }
+    }
+    
     public class func GetTodoByID(db: CBLDatabase, id: String) -> GoItemTodo {
         let doc = db.documentWithID(id)
         if let doc = doc {
@@ -75,7 +85,7 @@ public class Database {
                     emit(createdAt, nil)
             }
         }
-        view.setMapBlock(map, version: "2")
+        view.setMapBlock(map, version: "1")
         let query = db.viewNamed("todos").createQuery()
         query.startKey = 1356998400 as Float64
         query.endKey = 32503593600 as Float64

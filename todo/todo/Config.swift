@@ -1,9 +1,13 @@
-//
-//  Config.swift
-//  todo
-//
-//  Created by Mirco Zeiss on 1/24/16.
-//  Copyright © 2016 zemirco. All rights reserved.
-//
 
 import Foundation
+
+public struct Config {
+
+    // on osx
+    // docker-machine default ip
+    public static let URL = "192.168.99.100"
+    
+    // on linux
+    // public static let URL = "localhost"
+
+}

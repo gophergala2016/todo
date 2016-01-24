@@ -48,9 +48,8 @@ class TodosTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         let done = UITableViewRowAction(style: .Normal, title: "Done", handler: { action, indexPath in
-            let manager = CBLManager.sharedInstance()
             do {
-                let database = try manager.databaseNamed("todos")
+                let database = try Database.Get()
                 let todo = Database.GetTodoByID(database, id: self.todos[indexPath.row].id())
                 todo.setDone(true)
                 try Database.UpdateTodo(database, item: todo)
@@ -61,9 +60,8 @@ class TodosTableViewController: UITableViewController {
             }
         })
         let undone = UITableViewRowAction(style: .Normal, title: "Undone", handler: { action, indexPath in
-            let manager = CBLManager.sharedInstance()
             do {
-                let database = try manager.databaseNamed("todos")
+                let database = try Database.Get()
                 let todo = Database.GetTodoByID(database, id: self.todos[indexPath.row].id())
                 todo.setDone(false)
                 try Database.UpdateTodo(database, item: todo)
@@ -74,9 +72,8 @@ class TodosTableViewController: UITableViewController {
             }
         })
         let delete = UITableViewRowAction(style: .Default, title: "Remove", handler: { action, indexPath in
-            let manager = CBLManager.sharedInstance()
             do {
-                let database = try manager.databaseNamed("todos")
+                let database = try Database.Get()
                 try Database.RemoveTodoByID(database, id: self.todos[indexPath.row].id())
                 self.tableView.setEditing(false, animated: true)
                 self.getTodos()
@@ -96,10 +93,9 @@ class TodosTableViewController: UITableViewController {
     
     func getTodos() {
         // todos from database
-        let manager = CBLManager.sharedInstance()
         do {
-            let database = try manager.databaseNamed("todos")
-            manager.backgroundTellDatabaseNamed(database.name, to: { bgdb in
+            let database = try Database.Get()
+            database.manager.backgroundTellDatabaseNamed(database.name, to: { bgdb in
                 do {
                     let todos = try Database.GetTodos(bgdb)
                     dispatch_async(dispatch_get_main_queue(), {
@@ -122,10 +118,9 @@ class TodosTableViewController: UITableViewController {
     }
     
     func sync() {
-        let manager = CBLManager.sharedInstance()
         do {
-            let database = try manager.databaseNamed("todos")
-            let url = NSURL(string: "http://192.168.99.100:5984/john/")
+            let database = try Database.Get()
+            let url = NSURL(string: "http://\(Config.URL):5984/john/")
             self.push = database.createPushReplication(url!)
             self.pull = database.createPullReplication(url!)
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "replicationChanged:", name: kCBLReplicationChangeNotification, object: push)
@@ -144,7 +139,6 @@ class TodosTableViewController: UITableViewController {
             let pull = self.pull,
             let push = self.push {
                 if push.status == .Idle && pull.status == .Idle {
-                    print("done")
                     print(pull.lastError)
                     print(push.lastError)
                     self.getTodos()
