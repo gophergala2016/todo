@@ -1,7 +1,9 @@
 
 # todo
 
-Showcase for syncing data effortlessly between Go backend and native iOS application. Some of the backend code is reused on the mobile application via `gomobile`.
+Todo is a todo application which automatically syncs between the cloud and your mobile device. You don't even have to be online to create a new item or edit existing ones. Simply sync when you have internet connection.
+
+Todo consists of two parts. The first one is the web app written in Go. The second one is the native iOS app written in Swift. They share some common code via `gomobile`. That's the whole point of this project. I wanted to learn about `gomobile`.
 
 ![screencast](https://raw.githubusercontent.com/gophergala2016/todo/master/screencast.gif)
 
@@ -46,12 +48,12 @@ I'm using a Mac and my default `docker-machine` is running on `192.168.99.100`. 
 	```swift
 	public struct Config {
 
-	    // on osx
-	    // docker-machine default ip
-	    public static let URL = "192.168.99.100"
-	    
-	    // on linux
-	    // public static let URL = "localhost"
+		// on osx
+		// docker-machine default ip
+		public static let URL = "192.168.99.100"
+
+		// on linux
+		// public static let URL = "localhost"
 
 	}
 	```
@@ -83,6 +85,14 @@ Apart from `gomobile` I'd like to show some other cool Go features
 ## Caution
 
 Please don't use this example in production. I had to make some tweaks (like allowing sync over http rather than https) to make the demo work within 48 hours.
+
+## Conclusion
+
+`gomobile` is awesome. You never have to worry about your data models getting out of sync. Simply add a new field in your Go `struct` and recompile the framework for your mobile devices.
+
+However so far `gomobile` only supports basic type like `string` and `int`. For my app I needed a timestamp. Using `time.Time` wasn't possible and therefore I had to fall back to unix timestamps. All struct fields are getters/setters in Objective-C. In my app I have to convert an object to/from a json like format. As I don't have access to the fields directly and only have getter methods, generating json programatically is more work. With proper fields and reflection this process would be much easier.
+
+`gomobile` is still very young and I hope the Go team will continue their awesome work.
 
 ## License
 
