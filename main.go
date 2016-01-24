@@ -39,6 +39,7 @@ func main() {
 	r.Methods("GET").Path("/logout").Handler(appHandler(LogoutHandler))
 	r.Methods("POST").Path("/{id}/delete").Handler(appHandler(DeleteHandler))
 	r.Methods("POST").Path("/{id}/done").Handler(appHandler(DoneHandler))
+	r.Methods("POST").Path("/{id}/undone").Handler(appHandler(UndoneHandler))
 	// add logging
 	rWithLogging := handlers.LoggingHandler(os.Stdout, r)
 	log.Fatal(http.ListenAndServe(":3000", rWithLogging))
@@ -182,6 +183,27 @@ func DoneHandler(w http.ResponseWriter, r *http.Request) *appError {
 		return InternalServerError(fmt.Errorf("get todo by id: %v", err))
 	}
 	t.Done = true
+	if err := db.UpdateTodo(username, t); err != nil {
+		return InternalServerError(fmt.Errorf("update todo: %v", err))
+	}
+	http.Redirect(w, r, "/", http.StatusSeeOther)
+	return nil
+}
+
+func UndoneHandler(w http.ResponseWriter, r *http.Request) *appError {
+	vars := mux.Vars(r)
+	id := vars["id"]
+	// get username from session
+	session, err := RediStore.Get(r, "session")
+	if err != nil {
+		return InternalServerError(fmt.Errorf("get session from redistore: %v", err))
+	}
+	username := session.Values["username"].(string)
+	t, err := db.GetTodoByID(username, id)
+	if err != nil {
+		return InternalServerError(fmt.Errorf("get todo by id: %v", err))
+	}
+	t.Done = false
 	if err := db.UpdateTodo(username, t); err != nil {
 		return InternalServerError(fmt.Errorf("update todo: %v", err))
 	}
