@@ -3,6 +3,8 @@
 
 Showcase for syncing data effortlessly between Go backend and native iOS application. Some of the backend code is reused on the mobile application via `gomobile`.
 
+![screencast](https://raw.githubusercontent.com/gophergala2016/todo/master/screencast.gif)
+
 ## Usage
 
 Docker is used to run CouchDB for data sync and Redis for sessions. To start them via `docker-compose` use
