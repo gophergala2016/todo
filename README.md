@@ -55,6 +55,7 @@ Apart from `gomobile` I'd like to show some other cool Go features
 - error chaining
 - nested templates
 - template functions
+- use unix timestamps to handle dates on different platforms and convert them to type `time`
 
 ## Caution
 
