@@ -21,38 +21,38 @@ I'm using a Mac and my default `docker-machine` is running on `192.168.99.100`. 
 
 1. Get your own ip
 
-If you're on a Mac run
+	If you're on a Mac run
 
-```bash
-$ docker-machine ip default
-```
+	```bash
+	$ docker-machine ip default
+	```
 
-On Linux you can simply use `localhost`.
+	On Linux you can simply use `localhost`.
 
 2. Change golang config
 
-Change the IP in `config.go`.
+	Change the IP in `config.go`.
 
-```go
-const ip = "192.168.99.100"
-```
+	```go
+	const ip = "192.168.99.100"
+	```
 
 3. Change osx config
 
-Change the IP in `Config.swift`.
+	Change the IP in `Config.swift`.
 
-```swift
-public struct Config {
+	```swift
+	public struct Config {
 
-    // on osx
-    // docker-machine default ip
-    public static let URL = "192.168.99.100"
-    
-    // on linux
-    // public static let URL = "localhost"
+	    // on osx
+	    // docker-machine default ip
+	    public static let URL = "192.168.99.100"
+	    
+	    // on linux
+	    // public static let URL = "localhost"
 
-}
-```
+	}
+	```
 
 Start the web app via
 
