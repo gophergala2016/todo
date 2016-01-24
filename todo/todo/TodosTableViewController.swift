@@ -48,21 +48,47 @@ class TodosTableViewController: UITableViewController {
             let manager = CBLManager.sharedInstance()
             do {
                 let database = try manager.databaseNamed("todos")
-                var todo = Database.GetTodoByID(database, id: self.todos[indexPath.row].id())
+                let todo = Database.GetTodoByID(database, id: self.todos[indexPath.row].id())
                 todo.setDone(true)
                 try Database.UpdateTodo(database, item: todo)
                 self.tableView.setEditing(false, animated: true)
+                self.getTodos()
+            } catch {
+                print(error)
+            }
+        })
+        let undone = UITableViewRowAction(style: .Normal, title: "Undone", handler: { action, indexPath in
+            let manager = CBLManager.sharedInstance()
+            do {
+                let database = try manager.databaseNamed("todos")
+                let todo = Database.GetTodoByID(database, id: self.todos[indexPath.row].id())
+                todo.setDone(false)
+                try Database.UpdateTodo(database, item: todo)
+                self.tableView.setEditing(false, animated: true)
+                self.getTodos()
             } catch {
                 print(error)
             }
         })
         let delete = UITableViewRowAction(style: .Default, title: "Remove", handler: { action, indexPath in
-            print(action)
-            self.tableView.setEditing(false, animated: true)
+            let manager = CBLManager.sharedInstance()
+            do {
+                let database = try manager.databaseNamed("todos")
+                try Database.RemoveTodoByID(database, id: self.todos[indexPath.row].id())
+                self.tableView.setEditing(false, animated: true)
+                self.getTodos()
+            } catch {
+                print(error)
+            }
         })
+        undone.backgroundColor = UIColor.blueColor()
         done.backgroundColor = UIColor.blueColor()
         delete.backgroundColor = UIColor.orangeColor()
-        return [delete, done]
+        if todos[indexPath.row].done() {
+            return [delete, undone]
+        } else {
+            return [delete, done]
+        }
     }
     
     func getTodos() {

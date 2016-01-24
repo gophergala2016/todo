@@ -40,6 +40,15 @@ public class Database {
             throw error
         }
     }
+    
+    public class func RemoveTodoByID(db: CBLDatabase, id: String) throws {
+        let document = db.documentWithID(id)
+        do {
+            try document!.deleteDocument()
+        } catch {
+            throw error
+        }
+    }
 
     public class func GetTodos(db: CBLDatabase) throws -> [GoItemTodo] {
         let view = db.viewNamed("todos")
