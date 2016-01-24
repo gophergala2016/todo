@@ -5,21 +5,22 @@ import (
 	"net/http"
 )
 
-type appError struct {
+// AppError helps with http error handling
+type AppError struct {
 	Error   error
 	Message string
 	Code    int
 }
 
-func InternalServerError(err error) *appError {
-	return &appError{
+func internalServerError(err error) *AppError {
+	return &AppError{
 		Error:   err,
 		Message: http.StatusText(http.StatusInternalServerError),
 		Code:    http.StatusInternalServerError,
 	}
 }
 
-type appHandler func(w http.ResponseWriter, r *http.Request) *appError
+type appHandler func(w http.ResponseWriter, r *http.Request) *AppError
 
 func (fn appHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if e := fn(w, r); e != nil {

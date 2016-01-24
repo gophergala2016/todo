@@ -9,7 +9,7 @@ import (
 	"github.com/zemirco/todo/item"
 )
 
-type Database struct {
+type database struct {
 	Client *couchdb.Client
 }
 
@@ -21,7 +21,7 @@ const (
 )
 
 // CreateUser creates per user database and saves user document to _users database
-func (d Database) CreateUser(user couchdb.User) error {
+func (d database) CreateUser(user couchdb.User) error {
 	// create per user database
 	if _, err := d.Client.Create(user.Name); err != nil {
 		return fmt.Errorf("create database: %v", err)
@@ -57,7 +57,7 @@ function(doc) {
 }
 
 // SaveTodo saves todo item to CouchDB
-func (d Database) SaveTodo(database string, todo *item.Todo) error {
+func (d database) SaveTodo(database string, todo *item.Todo) error {
 	db := d.Client.Use(database)
 	if _, err := db.Post(todo); err != nil {
 		return fmt.Errorf("post todo: %v", err)
@@ -66,7 +66,7 @@ func (d Database) SaveTodo(database string, todo *item.Todo) error {
 }
 
 // GetTodos gets all todos from per user database
-func (d Database) GetTodos(database string) ([]item.Todo, error) {
+func (d database) GetTodos(database string) ([]item.Todo, error) {
 	db := d.Client.Use(database)
 	view := db.View("todo")
 	params := couchdb.QueryParameters{
@@ -90,13 +90,13 @@ func (d Database) GetTodos(database string) ([]item.Todo, error) {
 	return todos, json.Unmarshal(b, &todos)
 }
 
-func (d Database) GetTodoByID(database, id string) (item.Todo, error) {
+func (d database) GetTodoByID(database, id string) (item.Todo, error) {
 	db := d.Client.Use(database)
 	var t item.Todo
 	return t, db.Get(&t, id)
 }
 
-func (d Database) UpdateTodo(database string, todo item.Todo) error {
+func (d database) UpdateTodo(database string, todo item.Todo) error {
 	db := d.Client.Use(database)
 	_, err := db.Put(&todo)
 	if err != nil {
@@ -105,7 +105,7 @@ func (d Database) UpdateTodo(database string, todo item.Todo) error {
 	return nil
 }
 
-func (d Database) DeleteTodoByID(database, id string) error {
+func (d database) DeleteTodoByID(database, id string) error {
 	db := d.Client.Use(database)
 	// get document first to retrieve current revision
 	doc, err := d.GetTodoByID(database, id)

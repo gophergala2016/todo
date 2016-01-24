@@ -27,24 +27,24 @@ var funcMap = template.FuncMap{
 	"float64ToHuman": float64ToHuman,
 }
 
-type AppTemplate struct {
+type appTemplate struct {
 	t *template.Template
 }
 
-func NewAppTemplate(files ...string) *AppTemplate {
+func newAppTemplate(files ...string) *appTemplate {
 	base := template.Must(template.New("base").Funcs(funcMap).ParseFiles("base.html"))
 	template.Must(base.ParseFiles(files...))
-	return &AppTemplate{base}
+	return &appTemplate{base}
 }
 
-func (a AppTemplate) Execute(w http.ResponseWriter, data interface{}) *appError {
+func (a appTemplate) Execute(w http.ResponseWriter, data interface{}) *AppError {
 	d := struct {
 		Data interface{}
 	}{
 		Data: data,
 	}
 	if err := a.t.Execute(w, d); err != nil {
-		return InternalServerError(fmt.Errorf("execute template: %v", err))
+		return internalServerError(fmt.Errorf("execute template: %v", err))
 	}
 	return nil
 }

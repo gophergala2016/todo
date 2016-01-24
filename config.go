@@ -10,15 +10,14 @@ import (
 const ip = "192.168.99.100"
 
 var (
-	db        Database
-	RediStore *redistore.RediStore
+	db        database
+	rediStore *redistore.RediStore
 )
 
 func init() {
 	var err error
 	// init redis for sessions
-	// fix hard coded ip to docker machine
-	RediStore, err = redistore.NewRediStore(10, "tcp", ip+":6379", "", []byte("secret-key"))
+	rediStore, err = redistore.NewRediStore(10, "tcp", ip+":6379", "", []byte("secret-key"))
 	if err != nil {
 		panic(err)
 	}
@@ -28,7 +27,7 @@ func init() {
 		panic(err)
 	}
 	log.Println(client.Info())
-	db = Database{
+	db = database{
 		Client: client,
 	}
 }

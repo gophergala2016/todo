@@ -1,10 +1,7 @@
 package item
 
-// Todo defines todo item.
-// Whole package is reused for mobile app via gomobile.
-// Therefore only basic types work.
+// Todo describes todo item.
 type Todo struct {
-	// cannot embed couchdb.Document directly because gomobile complains
 	ID        string  `json:"_id,omitempty"`
 	Rev       string  `json:"_rev,omitempty"`
 	Type      string  `json:"type"`
@@ -14,7 +11,6 @@ type Todo struct {
 }
 
 // NewTodo returns new todo item.
-// Constructor must exist and must return pointer to work on ios.
 func NewTodo(text string) *Todo {
 	return &Todo{
 		Type: "todo",
@@ -23,7 +19,7 @@ func NewTodo(text string) *Todo {
 	}
 }
 
-// let Todo implement couchdb.CouchDoc interface
+// implement couchdb.CouchDoc interface
 
 // GetID returns document ID.
 func (t *Todo) GetID() string {

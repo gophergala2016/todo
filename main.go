@@ -14,8 +14,8 @@ import (
 )
 
 var (
-	indexTemplate = NewAppTemplate("index.html")
-	loginTemplate = NewAppTemplate("login.html")
+	indexTemplate = newAppTemplate("index.html")
+	loginTemplate = newAppTemplate("login.html")
 )
 
 func init() {
@@ -45,11 +45,12 @@ func main() {
 	log.Fatal(http.ListenAndServe(":3000", rWithLogging))
 }
 
-func IndexHandler(w http.ResponseWriter, r *http.Request) *appError {
+// IndexHandler handles GET request to /
+func IndexHandler(w http.ResponseWriter, r *http.Request) *AppError {
 	// check for logged in user
-	session, err := RediStore.Get(r, "session")
+	session, err := rediStore.Get(r, "session")
 	if err != nil {
-		return InternalServerError(fmt.Errorf("get session from redistore: %v", err))
+		return internalServerError(fmt.Errorf("get session from redistore: %v", err))
 	}
 	username := session.Values["username"]
 	if username == nil {
@@ -64,12 +65,12 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) *appError {
 	// logged in user
 	susername, ok := username.(string)
 	if !ok {
-		return InternalServerError(fmt.Errorf("parse %v to string", username))
+		return internalServerError(fmt.Errorf("parse %v to string", username))
 	}
 	// get todos from database
 	todos, err := db.GetTodos(susername)
 	if err != nil {
-		return InternalServerError(fmt.Errorf("get todos: %v", err))
+		return internalServerError(fmt.Errorf("get todos: %v", err))
 	}
 	data := struct {
 		Username string
@@ -81,11 +82,12 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) *appError {
 	return indexTemplate.Execute(w, data)
 }
 
-func GetLoginHandler(w http.ResponseWriter, r *http.Request) *appError {
+// GetLoginHandler handles GET request /login
+func GetLoginHandler(w http.ResponseWriter, r *http.Request) *AppError {
 	// check for logged in user
-	session, err := RediStore.Get(r, "session")
+	session, err := rediStore.Get(r, "session")
 	if err != nil {
-		return InternalServerError(fmt.Errorf("get session from redistore: %v", err))
+		return internalServerError(fmt.Errorf("get session from redistore: %v", err))
 	}
 	username := session.Values["username"]
 	if username == nil {
@@ -102,17 +104,18 @@ func GetLoginHandler(w http.ResponseWriter, r *http.Request) *appError {
 	return nil
 }
 
-func PostLoginHandler(w http.ResponseWriter, r *http.Request) *appError {
+// PostLoginHandler handles POST request to /login
+func PostLoginHandler(w http.ResponseWriter, r *http.Request) *AppError {
 	username := r.FormValue("username")
 	password := r.FormValue("password")
 	if username == "john" && password == "john" {
-		session, err := RediStore.Get(r, "session")
+		session, err := rediStore.Get(r, "session")
 		if err != nil {
-			return InternalServerError(fmt.Errorf("get session from redistore: %v", err))
+			return internalServerError(fmt.Errorf("get session from redistore: %v", err))
 		}
 		session.Values["username"] = username
 		if err := session.Save(r, w); err != nil {
-			return InternalServerError(fmt.Errorf("save session: %v", err))
+			return internalServerError(fmt.Errorf("save session: %v", err))
 		}
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return nil
@@ -122,90 +125,95 @@ func PostLoginHandler(w http.ResponseWriter, r *http.Request) *appError {
 	return nil
 }
 
-func LogoutHandler(w http.ResponseWriter, r *http.Request) *appError {
-	session, err := RediStore.Get(r, "session")
+// LogoutHandler handles GET request to /logout
+func LogoutHandler(w http.ResponseWriter, r *http.Request) *AppError {
+	session, err := rediStore.Get(r, "session")
 	if err != nil {
-		return InternalServerError(fmt.Errorf("get session from redistore: %v", err))
+		return internalServerError(fmt.Errorf("get session from redistore: %v", err))
 	}
 	session.Options.MaxAge = -1
 	if err := session.Save(r, w); err != nil {
-		return InternalServerError(fmt.Errorf("save session: %v", err))
+		return internalServerError(fmt.Errorf("save session: %v", err))
 	}
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 	return nil
 }
 
-func CreateHandler(w http.ResponseWriter, r *http.Request) *appError {
+// CreateHandler handles POST request to /create
+func CreateHandler(w http.ResponseWriter, r *http.Request) *AppError {
 	text := r.FormValue("text")
 	todo := item.NewTodo(text)
 	// createdAt has to be set manually here as ios doesn't understand type time yet
 	todo.CreatedAt = float64(time.Now().UTC().Unix())
 	// get username from session
-	session, err := RediStore.Get(r, "session")
+	session, err := rediStore.Get(r, "session")
 	if err != nil {
-		return InternalServerError(fmt.Errorf("get session from redistore: %v", err))
+		return internalServerError(fmt.Errorf("get session from redistore: %v", err))
 	}
 	username := session.Values["username"].(string)
 	if err := db.SaveTodo(username, todo); err != nil {
-		return InternalServerError(fmt.Errorf("save todo: %v", err))
+		return internalServerError(fmt.Errorf("save todo: %v", err))
 	}
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 	return nil
 }
 
-func DeleteHandler(w http.ResponseWriter, r *http.Request) *appError {
+// DeleteHandler handles POST request to /{id}/delete
+func DeleteHandler(w http.ResponseWriter, r *http.Request) *AppError {
 	vars := mux.Vars(r)
 	id := vars["id"]
 	// get username from session
-	session, err := RediStore.Get(r, "session")
+	session, err := rediStore.Get(r, "session")
 	if err != nil {
-		return InternalServerError(fmt.Errorf("get session from redistore: %v", err))
+		return internalServerError(fmt.Errorf("get session from redistore: %v", err))
 	}
 	username := session.Values["username"].(string)
 	if err := db.DeleteTodoByID(username, id); err != nil {
-		return InternalServerError(fmt.Errorf("delete todo by id: %v", err))
+		return internalServerError(fmt.Errorf("delete todo by id: %v", err))
 	}
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 	return nil
 }
 
-func DoneHandler(w http.ResponseWriter, r *http.Request) *appError {
+// DoneHandler handles POST request to /{id}/done
+func DoneHandler(w http.ResponseWriter, r *http.Request) *AppError {
 	vars := mux.Vars(r)
 	id := vars["id"]
 	// get username from session
-	session, err := RediStore.Get(r, "session")
+	session, err := rediStore.Get(r, "session")
 	if err != nil {
-		return InternalServerError(fmt.Errorf("get session from redistore: %v", err))
+		return internalServerError(fmt.Errorf("get session from redistore: %v", err))
 	}
 	username := session.Values["username"].(string)
 	t, err := db.GetTodoByID(username, id)
 	if err != nil {
-		return InternalServerError(fmt.Errorf("get todo by id: %v", err))
+		return internalServerError(fmt.Errorf("get todo by id: %v", err))
 	}
 	t.Done = true
 	if err := db.UpdateTodo(username, t); err != nil {
-		return InternalServerError(fmt.Errorf("update todo: %v", err))
+		return internalServerError(fmt.Errorf("update todo: %v", err))
 	}
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 	return nil
 }
 
-func UndoneHandler(w http.ResponseWriter, r *http.Request) *appError {
+// UndoneHandler handles POST request to /{id}/undone
+func UndoneHandler(w http.ResponseWriter, r *http.Request) *AppError {
 	vars := mux.Vars(r)
 	id := vars["id"]
 	// get username from session
-	session, err := RediStore.Get(r, "session")
+	session, err := rediStore.Get(r, "session")
 	if err != nil {
-		return InternalServerError(fmt.Errorf("get session from redistore: %v", err))
+		return internalServerError(fmt.Errorf("get session from redistore: %v", err))
 	}
 	username := session.Values["username"].(string)
 	t, err := db.GetTodoByID(username, id)
 	if err != nil {
-		return InternalServerError(fmt.Errorf("get todo by id: %v", err))
+		return internalServerError(fmt.Errorf("get todo by id: %v", err))
 	}
 	t.Done = false
 	if err := db.UpdateTodo(username, t); err != nil {
-		return InternalServerError(fmt.Errorf("update todo: %v", err))
+		return internalServerError(fmt.Errorf("update todo: %v", err))
 	}
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 	return nil
