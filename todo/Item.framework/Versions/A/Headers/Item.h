@@ -27,8 +27,6 @@
 - (void)setCreatedAt:(double)v;
 - (BOOL)done;
 - (void)setDone:(BOOL)v;
-- (NSString*)awesome;
-- (void)setAwesome:(NSString*)v;
 - (NSString*)getID;
 - (NSString*)getRev;
 @end

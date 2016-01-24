@@ -33,9 +33,36 @@ class TodosTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(reuseIdentifier, forIndexPath: indexPath)
-        cell.textLabel?.text = todos[indexPath.row].text()
-        cell.accessoryType = UITableViewCellAccessoryType.Checkmark
+        let todo = todos[indexPath.row]
+        cell.textLabel?.text = todo.text()
+        if todo.done() {
+            cell.accessoryType = .Checkmark
+        } else {
+            cell.accessoryType = .None
+        }
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let done = UITableViewRowAction(style: .Normal, title: "Done", handler: { action, indexPath in
+            let manager = CBLManager.sharedInstance()
+            do {
+                let database = try manager.databaseNamed("todos")
+                var todo = Database.GetTodoByID(database, id: self.todos[indexPath.row].id())
+                todo.setDone(true)
+                try Database.UpdateTodo(database, item: todo)
+                self.tableView.setEditing(false, animated: true)
+            } catch {
+                print(error)
+            }
+        })
+        let delete = UITableViewRowAction(style: .Default, title: "Remove", handler: { action, indexPath in
+            print(action)
+            self.tableView.setEditing(false, animated: true)
+        })
+        done.backgroundColor = UIColor.blueColor()
+        delete.backgroundColor = UIColor.orangeColor()
+        return [delete, done]
     }
     
     func getTodos() {
@@ -74,6 +101,8 @@ class TodosTableViewController: UITableViewController {
             self.pull = database.createPullReplication(url!)
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "replicationChanged:", name: kCBLReplicationChangeNotification, object: push)
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "replicationChanged:", name: kCBLReplicationChangeNotification, object: pull)
+            self.push?.continuous = true
+            self.pull?.continuous = true
             self.push!.start()
             self.pull!.start()
         } catch {
@@ -85,7 +114,7 @@ class TodosTableViewController: UITableViewController {
         if
             let pull = self.pull,
             let push = self.push {
-                if push.status == .Stopped && pull.status == .Stopped {
+                if push.status == .Idle && pull.status == .Idle {
                     print("done")
                     print(pull.lastError)
                     print(push.lastError)
